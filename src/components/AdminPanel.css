@@ -1,0 +1,91 @@
+.admin-panel-container {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.admin-panel-form input[type="text"],
+.admin-panel-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.admin-panel-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.admin-panel-form input[type="checkbox"] {
+  margin-left: 0.5rem;
+  transform: scale(1.2);
+}
+
+.admin-panel-form input[type="file"] {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-panel-form button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-panel-form button:hover {
+  background-color: #0056b3;
+}
+
+.message-success {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.message-error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.product-list {
+  list-style: none;
+  padding: 0;
+}
+
+.product-list li {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+}
+
+.product-list img {
+  max-width: 150px;
+  margin-top: 8px;
+  display: block;
+}
+
+.product-list button {
+  margin-top: 8px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-list button:hover {
+  background-color: #c0392b;
+}
