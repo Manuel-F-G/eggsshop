@@ -15,6 +15,7 @@ import { signOut } from "firebase/auth";
 export default function AdminPanel() {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [colorTexto, setColorTexto] = useState("#39ff14");
   const [disponible, setDisponible] = useState(true);
   const [imagen, setImagen] = useState(null);
   const [mensaje, setMensaje] = useState("");
@@ -66,6 +67,7 @@ export default function AdminPanel() {
       await addDoc(collection(db, "productos"), {
         nombre,
         descripcion,
+        colorTexto,
         disponible,
         imagenURL,
         fecha: Timestamp.now(),
@@ -74,6 +76,7 @@ export default function AdminPanel() {
       setMensaje("Producto subido con éxito ✅");
       setNombre("");
       setDescripcion("");
+      setColorTexto("#39ff14");
       setDisponible(true);
       setImagen(null);
     } catch (error) {
@@ -107,16 +110,27 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
-      <div style={{ textAlign: "right", marginBottom: "1rem" }}>
-        <button onClick={handleLogout} style={{ background: "#333", color: "#fff", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}>
-          Cerrar sesión
-        </button>
-      </div>
+    <div style={{ padding: "2rem", backgroundColor: "#000", color: "#fff", minHeight: "100vh" }}>
+      <header style={{ textAlign: "center", padding: "1rem", borderBottom: "1px solid #444" }}>
+        <h1 style={{ color: "#39ff14", textShadow: "0 0 5px #39ff14" }}>🌟 Panel de Administración 🌟</h1>
+        <div style={{ textAlign: "right" }}>
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "#111",
+              color: "#fff",
+              border: "1px solid #444",
+              padding: "0.5rem 1rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Cerrar sesión
+          </button>
+        </div>
+      </header>
 
-      <h2>Panel de Administración</h2>
-
-      <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: "2rem", marginTop: "2rem" }}>
         <input
           type="text"
           placeholder="Nombre del producto"
@@ -124,6 +138,13 @@ export default function AdminPanel() {
           onChange={(e) => setNombre(e.target.value)}
           style={{ width: "100%", marginBottom: "1rem" }}
         />
+
+        <input
+          type="color"
+          value={colorTexto}
+          onChange={(e) => setColorTexto(e.target.value)}
+          style={{ marginBottom: "1rem" }}
+        /> Color del texto
 
         <textarea
           placeholder="Descripción"
@@ -149,27 +170,41 @@ export default function AdminPanel() {
           style={{ marginBottom: "1rem" }}
         />
 
-        <button type="submit" style={{ width: "100%" }}>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            background: "#39ff14",
+            color: "#000",
+            padding: "1rem",
+            fontWeight: "bold",
+          }}
+        >
           Subir producto
         </button>
       </form>
 
-      <p>{mensaje}</p>
+      <p style={{ textAlign: "center", color: mensaje.includes("✅") ? "#39ff14" : "red" }}>
+        {mensaje}
+      </p>
 
-      <h3>Productos existentes</h3>
+      <h3 style={{ borderBottom: "1px solid #444", paddingBottom: "0.5rem", color: "#39ff14" }}>
+        Productos existentes
+      </h3>
       {productos.length === 0 && <p>No hay productos aún.</p>}
       <ul style={{ listStyle: "none", padding: 0 }}>
-        {productos.map(({ id, nombre, descripcion, disponible, imagenURL }) => (
+        {productos.map(({ id, nombre, descripcion, disponible, imagenURL, colorTexto }) => (
           <li
             key={id}
             style={{
-              border: "1px solid #ccc",
+              border: "1px solid #444",
               padding: "1rem",
               marginBottom: "1rem",
               borderRadius: "8px",
               display: "flex",
               gap: "1rem",
               alignItems: "center",
+              backgroundColor: "#111",
             }}
           >
             <img
@@ -178,9 +213,11 @@ export default function AdminPanel() {
               style={{ width: "80px", height: "80px", objectFit: "cover" }}
             />
             <div style={{ flex: 1 }}>
-              <strong>{nombre}</strong>
-              <p>{descripcion}</p>
-              <label>
+              <strong style={{ color: colorTexto || "#39ff14", textShadow: `0 0 3px ${colorTexto}` }}>
+                {nombre}
+              </strong>
+              <p style={{ color: "#fff" }}>{descripcion}</p>
+              <label style={{ color: "#fff" }}>
                 <input
                   type="checkbox"
                   checked={disponible}
@@ -206,6 +243,10 @@ export default function AdminPanel() {
           </li>
         ))}
       </ul>
+
+      <footer style={{ textAlign: "center", padding: "2rem 0", borderTop: "1px solid #444", color: "#777" }}>
+        © {new Date().getFullYear()} Tu Negocio. Todos los derechos reservados.
+      </footer>
     </div>
   );
 }
